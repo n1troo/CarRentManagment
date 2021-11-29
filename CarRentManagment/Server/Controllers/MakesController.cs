@@ -75,7 +75,7 @@ namespace CarRentManagment.Server.Controllers
         // POST: api/Makes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<IActionResult> PostMake(Make make)
+        public async Task<ActionResult<Make>> PostMake(Make make)
         {
             await _unitOfWork.Makes.Insert(make);
             await _unitOfWork.Save(HttpContext);

@@ -1,0 +1,21 @@
+﻿@page "/makes/"
+
+
+
+@attribute [Authorize]
+@inject HttpClient _Http
+
+<h3 class="card-card-title">Car makes</h3>
+
+@if (Model == null)
+{
+    <div class="alert alert-info">Loading....</div>
+}
+
+
+@code {
+    private List<Make>? Model;
+
+    protected override async Task OnInitializedAsync() => Model = await _Http.GetFromJsonAsync<List<Make>>("Makes");
+
+}

@@ -40,7 +40,7 @@ namespace CarRentManagment.Server.Controllers
 
         // POST api/<ColorsController>
         [HttpPost]
-        public async Task<IActionResult> Post(Color color)
+        public async Task<ActionResult<Color>> Post(Color color)
         {
             await _unitOfWork.Colors.Insert(color);
             await _unitOfWork.Save(HttpContext);
