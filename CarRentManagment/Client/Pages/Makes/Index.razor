@@ -1,21 +1,110 @@
 ﻿@page "/makes/"
 
-
-
-@attribute [Authorize]
 @inject HttpClient _Http
-
+@inject IJSRuntime js
 <h3 class="card-card-title">Car makes</h3>
 
-@if (Model == null)
+@*<head>
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+</head>*@
+
+@if (Elements == null)
 {
     <div class="alert alert-info">Loading....</div>
 }
+else
+{
+    <div class="form-group">
+    <input class="form-control" type="text" placeholder="Filter..."
+        @bind="Filter"
+        @bind:event="oninput">
+    </div>
+    <!-- Circle Buttons -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"> Marki samochodów</h6>
+        </div>
+        <div class="card-body">
+            <table class="table table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Created by</th>
+                        <th scope="col">UpdatedBy</th>
+                        <th scope="col">Data0</th>
+                        <th scope="col">Button</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var forecast in Elements)
+                    {
 
+                        if (!IsVisible(forecast))
+                            continue;
+                        <tr>
+                            <td>@forecast.Id</td>
+                            <td>@forecast.Name</td>
+                            <td>@forecast.CreatedBy</td>
+                            <td>@forecast.UpdatedBy</td>
+                            <td typeof="data">@forecast.DateCreated</td>
+                            <td>
+                                <a href="/makes/view" class="btn btn-warning btn-circle btn-sm">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                 </a>
+
+                                <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(forecast.Id))">
+                                     <i class="far fa-trash-alt"></i>
+                            </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
 
 @code {
-    private List<Make>? Model;
+    private List<Make>? Elements ;
+    public string? Filter { get; set; }
 
-    protected override async Task OnInitializedAsync() => Model = await _Http.GetFromJsonAsync<List<Make>>("Makes");
 
+    protected override async Task OnInitializedAsync()  //protected override async Task OnInitializedAsync() => Elements = await _Http.GetFromJsonAsync<List<Make>>("Makes");
+    {
+        Elements = await _Http.GetFromJsonAsync<List<Make>>("api/Makes");
+    }
+
+    private async Task Delete(int id)
+    {
+        try{
+            var confirm = await js.InvokeAsync<bool>("confirm", "Do you want delete?");
+            if (confirm)
+            {
+                var back = await _Http.DeleteAsync($"api/Makes/{id}");
+                await OnInitializedAsync();
+            }
+        }
+        catch(Exception ex)
+        {
+            
+        }
+
+    }
+
+    public bool IsVisible(Make forecast)
+    {
+        if (string.IsNullOrEmpty(Filter))
+            return true;
+
+        if(forecast.Name != null)
+        if (forecast.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    }
 }

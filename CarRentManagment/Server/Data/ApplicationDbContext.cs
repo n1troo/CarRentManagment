@@ -22,7 +22,7 @@ namespace CarRentManagment.Server.Data
         public DbSet<Model> Models { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Booking> Bookings { get; set; }
-        public DbSet<Color> Colors { get; set; }
+        public DbSet<Kolor> Kolors { get; set; }
 
         public DbSet<Make> Makes { get; set; }
 
@@ -30,7 +30,7 @@ namespace CarRentManagment.Server.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new ColorSeed());
+            builder.ApplyConfiguration(new KolorSeed());
             builder.ApplyConfiguration(new MakeSeed());
             builder.ApplyConfiguration(new ModelSeed());
             builder.ApplyConfiguration(new RolesSeed());

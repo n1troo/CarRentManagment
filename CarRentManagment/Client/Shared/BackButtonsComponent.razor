@@ -1,0 +1,13 @@
+﻿@page "/BackButtonsComponent/{Parametr}"
+@inject NavigationManager navMan
+
+
+@code {
+    [Parameter]
+    public string Parametr { get; set; } = "";
+
+    private void GoBack()
+    {
+        navMan.NavigateTo($"{Parametr}");
+    }
+}

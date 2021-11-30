@@ -8,7 +8,7 @@ namespace CarRentManagment.Server.IRepository
         IGenericRepository<Make> Makes { get; }
         IGenericRepository<Model> Models { get; }
         IGenericRepository<Vehicle> Vehicles { get; }
-        IGenericRepository<Color> Colors { get; }
+        IGenericRepository<Kolor> Kolors { get; }
         IGenericRepository<Customer> Customers { get; }
         IGenericRepository<Booking> Bookings { get; }
        

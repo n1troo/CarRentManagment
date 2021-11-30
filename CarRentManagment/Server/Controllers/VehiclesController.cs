@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRentManagment.Server.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class VehiclesController : ControllerBase
     {
@@ -27,7 +27,7 @@ namespace CarRentManagment.Server.Controllers
         public async Task<IActionResult> GetVehicles()
         {
             var Vehicles = await _unitOfWork.Vehicles.GetAll(includes: q => q.Include(x => x.Make).Include(x => x.Model)
-                .Include(x => x.Color));
+                .Include(x => x.Kolor));
             return Ok(Vehicles);
         }
 
@@ -50,7 +50,8 @@ namespace CarRentManagment.Server.Controllers
         public async Task<IActionResult> GetVehicleDetails(int id)
         {
             var Vehicle = await _unitOfWork.Vehicles.Get(q => q.Id == id,
-                includes: q => q.Include(x => x.Make).Include(x => x.Model).Include(x => x.Color));
+                includes: q => q.Include(x => x.Make)
+                .Include(x => x.Model).Include(x => x.Kolor));
 
             if (Vehicle == null)
             {

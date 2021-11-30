@@ -12,8 +12,8 @@ namespace CarRentManagment.Shared.Domain
         public int ModelId { get; set; }    
         public virtual Model Model { get;set; }
 
-        public int ColorId { get; set; }
-        public virtual Color Color { get; set; }
+        public int KolorId { get; set; }
+        public virtual Kolor Kolor { get; set; }
 
         public int MakeId { get; set; }
         public virtual Make Make { get; set; }

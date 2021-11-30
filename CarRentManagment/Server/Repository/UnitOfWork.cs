@@ -2,21 +2,18 @@
 using CarRentManagment.Server.IRepository;
 using CarRentManagment.Shared.Domain;
 
-using System.Drawing;
-
-using Color = CarRentManagment.Shared.Domain.Color;
-
 namespace CarRentManagment.Server.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly ApplicationDbContext _context;
-        private IGenericRepository<Make> _makes;
-        private IGenericRepository<Color> _colors;
-        private IGenericRepository<Model> _models;
-        private IGenericRepository<Booking> _bookings;
-        private IGenericRepository<Customer> _customers;
-        private IGenericRepository<Vehicle> _vehicles;
+        private ApplicationDbContext _context;
+
+        private IGenericRepository<Make>? _makes;
+        private IGenericRepository<Kolor>? _kolors;
+        private IGenericRepository<Model>? _models;
+        private IGenericRepository<Booking>? _bookings;
+        private IGenericRepository<Customer>? _customers;
+        private IGenericRepository<Vehicle>? _vehicles;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -27,8 +24,8 @@ namespace CarRentManagment.Server.Repository
             => _makes ??= new GenericRepository<Make>(_context);
         public IGenericRepository<Model> Models
             => _models ??= new GenericRepository<Model>(_context);
-        public IGenericRepository<Color> Colors
-            => _colors ??= new GenericRepository<Color>(_context);
+        public IGenericRepository<Kolor> Kolors
+            => _kolors ??= new GenericRepository<Kolor>(_context);
         public IGenericRepository<Vehicle> Vehicles
             => _vehicles ??= new GenericRepository<Vehicle>(_context);
         public IGenericRepository<Booking> Bookings

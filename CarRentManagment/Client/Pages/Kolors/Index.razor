@@ -1,0 +1,27 @@
+﻿@page "/kolors/"
+
+@inject HttpClient _client
+
+@if(ElementsKolors == null){
+    <Spinner/>
+}
+else
+{
+   <div class="form-group">
+       <input class="form-control" type="text" placeholder ="filtr..." 
+       @bind="Filtr" 
+       @bind:event="oninput" />
+   </div>
+}
+
+
+
+@code {
+
+    private List<Kolor>? ElementsKolors;
+    private string Filtr; 
+    protected override async Task OnInitializedAsync()
+    {
+        ElementsKolors = await _client.GetFromJsonAsync<List<Kolor>>(Static.Endpoints.KolorsEndpoint);
+    }
+}
