@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarRentManagment.Server.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class VehiclesController : ControllerBase
     {
