@@ -1,4 +1,5 @@
 ﻿@page "/makes/"
+@using System.Diagnostics
 
 @inject HttpClient _Http
 @inject IJSRuntime js
@@ -45,7 +46,9 @@ else
                     {
 
                         if (!IsVisible(forecast))
+                        {
                             continue;
+                        }
                         <tr>
                             <td>@forecast.Id</td>
                             <td>@forecast.Name</td>
@@ -76,7 +79,7 @@ else
 
     protected override async Task OnInitializedAsync()  //protected override async Task OnInitializedAsync() => Elements = await _Http.GetFromJsonAsync<List<Make>>("Makes");
     {
-        Elements = await _Http.GetFromJsonAsync<List<Make>>("api/Makes");
+        Elements = await _Http.GetFromJsonAsync<List<Make>>(Static.Endpoints.MakesEndpoint);
     }
 
     private async Task Delete(int id)

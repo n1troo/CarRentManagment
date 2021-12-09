@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CarRentManagment.Server.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class KolorsController : Controller
     {
         readonly IUnitOfWork _unitOfWork;
