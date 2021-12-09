@@ -1,6 +1,7 @@
 ﻿@page "/kolors/"
 
 @inject HttpClient _client
+@inject IJSRuntime js
 
 @if(ElementsKolors == null){
     <Spinner/>
@@ -9,19 +10,76 @@ else
 {
    <div class="form-group">
        <input class="form-control" type="text" placeholder ="filtr..." 
-       @bind="Filtr" 
+       @bind="FitrBox" 
        @bind:event="oninput" />
    </div>
+
+    <!-- Circle Buttons -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"> Marki samochodów</h6>
+        </div>
+        <div class="card-body">
+            <table class="table table table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Created by</th>
+                        <th scope="col">UpdatedBy</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Button</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var kolor in ElementsKolors)
+                    {
+
+                        if (!(IsVisible(kolor)))
+                            continue;
+                        <tr>
+                            <td>@kolor.Id</td>
+                            <td>@kolor.Name</td>
+                            <td>@kolor.CreatedBy</td>
+                            <td>@kolor.UpdatedBy</td>
+                            <td typeof="data">@kolor.DateCreated</td>
+                            <td>
+                                <a href="/makes/view" class="btn btn-warning btn-circle btn-sm">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                 </a>
+
+                                <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(kolor.Id))">
+                                     <i class="far fa-trash-alt"></i>
+                            </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }
-
-
 
 @code {
 
     private List<Kolor>? ElementsKolors;
-    private string Filtr; 
-    protected override async Task OnInitializedAsync()
+    public string FitrBox;
+
+    protected override async Task OnInitializedAsync() => ElementsKolors = await _client.GetFromJsonAsync<List<Kolor>>(Static.Endpoints.KolorsEndpoint);
+
+    private bool IsVisible(Kolor kolor)
     {
-        ElementsKolors = await _client.GetFromJsonAsync<List<Kolor>>(Static.Endpoints.KolorsEndpoint);
+
+        if (string.IsNullOrEmpty(FitrBox))
+            return true;
+
+        if (kolor.Name.Contains(FitrBox, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    }
+
+    private void Delete(int id)
+    {
     }
 }
