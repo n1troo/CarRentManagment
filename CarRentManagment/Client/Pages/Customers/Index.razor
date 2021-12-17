@@ -1,9 +1,9 @@
-﻿@page "/kolors/"
+﻿@page "/customers/"
 
 @inject HttpClient _client
 @inject IJSRuntime js
 
-@if(ElementsKolors == null){
+@if(ElementsCustomers == null){
     <Spinner/>
 }
 else
@@ -24,7 +24,7 @@ else
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">TaxId</th>
                         <th scope="col">Created by</th>
                         <th scope="col">UpdatedBy</th>
                         <th scope="col">Data</th>
@@ -32,23 +32,23 @@ else
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var kolor in ElementsKolors)
+                    @foreach (var Customer in ElementsCustomers)
                     {
 
-                        if (!(IsVisible(kolor)))
+                        if (!(IsVisible(Customer)))
                             continue;
                         <tr>
-                            <td>@kolor.Id</td>
-                            <td>@kolor.Name</td>
-                            <td>@kolor.CreatedBy</td>
-                            <td>@kolor.UpdatedBy</td>
-                            <td typeof="data">@kolor.DateCreated</td>
+                            <td>@Customer.Id</td>
+                            <td>@Customer.TaxId</td>
+                            <td>@Customer.CreatedBy</td>
+                            <td>@Customer.UpdatedBy</td>
+                            <td typeof="data">@Customer.DateCreated</td>
                             <td>
-                                <a href="/kolors/view" class="btn btn-warning btn-circle btn-sm">
+                                <a href="/Customers/view" class="btn btn-warning btn-circle btn-sm">
                                         <i class="fas fa-exclamation-triangle"></i>
                                  </a>
 
-                                <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(kolor.Id))">
+                                <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(Customer.Id))">
                                      <i class="far fa-trash-alt"></i>
                             </button>
                             </td>
@@ -62,18 +62,18 @@ else
 
 @code {
 
-    private List<Kolor>? ElementsKolors;
+    private List<Customer>? ElementsCustomers;
     public string FitrBox;
 
-    protected override async Task OnInitializedAsync() => ElementsKolors = await _client.GetFromJsonAsync<List<Kolor>>(Static.Endpoints.KolorsEndpoint);
+    protected override async Task OnInitializedAsync() => ElementsCustomers = await _client.GetFromJsonAsync<List<Customer>>(Static.Endpoints.CustomersEndpoint);
 
-    private bool IsVisible(Kolor kolor)
+    private bool IsVisible(Customer Customer)
     {
 
         if (string.IsNullOrEmpty(FitrBox))
             return true;
 
-        if (kolor.Name.Contains(FitrBox, StringComparison.OrdinalIgnoreCase))
+        if (Customer.TaxId.Contains(FitrBox, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;

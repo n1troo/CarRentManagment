@@ -1,17 +1,10 @@
-﻿@page "/makes/"
+﻿@page "/models/"
 @using System.Diagnostics
 
 @inject HttpClient _Http
 @inject IJSRuntime js
-<h3 class="card-card-title">Car makes</h3>
+<h3 class="card-card-title">Car models</h3>
 
-<head>
-    <!-- Custom styles for this template -->
-    @*<link href="css/sb-admin-2.min.css" rel="stylesheet">*@
-
-    <!-- Custom styles for this page -->
-    @*<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">*@
-</head>
 
 @if (Elements == null)
 {
@@ -27,7 +20,7 @@ else
     <!-- Circle Buttons -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"> Marki samochodów</h6>
+            <h6 class="m-0 font-weight-bold text-primary"> modele samochodów</h6>
         </div>
         <div class="card-body">
             <table class="table table table-hover">
@@ -37,30 +30,30 @@ else
                         <th scope="col">Name</th>
                         <th scope="col">Created by</th>
                         <th scope="col">UpdatedBy</th>
-                        <th scope="col">Data0</th>
+                        <th scope="col">Data</th>
                         <th scope="col">Button</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var forecast in Elements)
+                    @foreach (var model in Elements)
                     {
 
-                        if (!IsVisible(forecast))
+                        if (!IsVisible(model))
                         {
                             continue;
                         }
                         <tr>
-                            <td>@forecast.Id</td>
-                            <td>@forecast.Name</td>
-                            <td>@forecast.CreatedBy</td>
-                            <td>@forecast.UpdatedBy</td>
-                            <td typeof="data">@forecast.DateCreated</td>
+                            <td>@model.Id</td>
+                            <td>@model.Name</td>
+                            <td>@model.CreatedBy</td>
+                            <td>@model.UpdatedBy</td>
+                            <td typeof="data">@model.DateCreated</td>
                             <td>
-                                <a href="/makes/view" class="btn btn-warning btn-circle btn-sm">
+                                <a href="/models/view" class="btn btn-warning btn-circle btn-sm">
                                         <i class="fas fa-exclamation-triangle"></i>
                                  </a>
 
-                                <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(forecast.Id))">
+                                <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(model.Id))">
                                      <i class="far fa-trash-alt"></i>
                             </button>
                             </td>
@@ -73,22 +66,23 @@ else
 }
 
 @code {
-    private List<Make>? Elements ;
+    private List<Model>? Elements ;
     public string? Filter { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-        Elements = await _Http.GetFromJsonAsync<List<Make>>(Static.Endpoints.MakesEndpoint);
+        Elements = await _Http.GetFromJsonAsync<List<Model>>(Static.Endpoints.ModelsEndpoint);
     }
 
     private async Task Delete(int id)
     {
-        try{
+        try
+        {
             var confirm = await js.InvokeAsync<bool>("confirm", "Do you want delete?");
             if (confirm)
             {
-                var back = await _Http.DeleteAsync($"api/Makes/{id}");
+                var back = await _Http.DeleteAsync($"{Static.Endpoints.ModelsEndpoint}/{id}");
                 await OnInitializedAsync();
             }
         }
@@ -99,13 +93,13 @@ else
 
     }
 
-    public bool IsVisible(Make forecast)
+    public bool IsVisible(Model model)
     {
         if (string.IsNullOrEmpty(Filter))
             return true;
 
-        if(forecast.Name != null)
-        if (forecast.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+        if(model.Name != null)
+        if (model.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
             return true;
 
         return false;

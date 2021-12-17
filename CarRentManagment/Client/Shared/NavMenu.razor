@@ -1,4 +1,4 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿<div class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="">CarRentManagment</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -7,38 +7,60 @@
     </div>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu" >
+    <nav class="vertical-center">
         
         <LoginDisplay />
         
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <span class="fa fa-house-user" aria-hidden="true"></span> Home
             </NavLink>
-        </div>
-       
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="kolors/">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Kolors
-            </NavLink>
-        </div>
-
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="makes/">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Makes
+        </div>                                          
+                                                                         
+        <div class="nav-item px-3">                                      
+            <NavLink class="nav-link" href="kolors/">                    
+                <span class="fas fa-angle-right" aria-hidden="true"></span> Kolors
+            </NavLink>                                                   
+        </div>                                                           
+                                                                
+        <div class="nav-item px-3">                                      
+            <NavLink class="align-middle nav-link" href="makes/">                     
+                <span class="fas fa-angle-right" aria-hidden="true"></span> Makes
+            </NavLink>                                                   
+        </div>                                                           
+                                                                         
+          <div class="nav-item px-3">                                    
+            <NavLink class="nav-link" href="models/">                    
+                <span class="fas fa-angle-right" aria-hidden="true"></span> Models
+            </NavLink>                                                   
+        </div>                                                           
+                                                                         
+        <div class="nav-item px-3">                                      
+            <NavLink class="nav-link" href="vehicles/">                  
+                <span class="fas fa-angle-right" aria-hidden="true"></span> Vehicles
+            </NavLink>                                                   
+        </div>                                                           
+                                                                         
+        <div class="nav-item px-3">                                      
+            <NavLink class="nav-link" href="customers/">                 
+                <span class="fas fa-angle-right" aria-hidden="true"></span> Customers
+            </NavLink>                                                   
+        </div>                                                           
+                                                                         
+         <div class="nav-item px-3">                                     
+            <NavLink class="nav-link" href="bookings/">                  
+                <span class="fas fa-angle-right" aria-hidden="true"></span> Bookings
             </NavLink>
         </div>
 
     </nav>
 </div>
 
+
+<div class="container-fluid">
+    
+</div>
 
 
 @code {
