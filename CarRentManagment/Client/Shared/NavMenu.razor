@@ -7,61 +7,55 @@
     </div>
 </div>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu" >
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="vertical-center">
-        
+
         <LoginDisplay />
-        
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="fa fa-house-user" aria-hidden="true"></span> Home
             </NavLink>
-        </div>                                          
-                                                                         
-        <div class="nav-item px-3">                                      
-            <NavLink class="nav-link" href="kolors/">                    
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="kolors/">
                 <span class="fas fa-angle-right" aria-hidden="true"></span> Kolors
-            </NavLink>                                                   
-        </div>                                                           
-                                                                
-        <div class="nav-item px-3">                                      
-            <NavLink class="align-middle nav-link" href="makes/">                     
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="align-middle nav-link" href="makes/">
                 <span class="fas fa-angle-right" aria-hidden="true"></span> Makes
-            </NavLink>                                                   
-        </div>                                                           
-                                                                         
-          <div class="nav-item px-3">                                    
-            <NavLink class="nav-link" href="models/">                    
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="models/">
                 <span class="fas fa-angle-right" aria-hidden="true"></span> Models
-            </NavLink>                                                   
-        </div>                                                           
-                                                                         
-        <div class="nav-item px-3">                                      
-            <NavLink class="nav-link" href="vehicles/">                  
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="vehicles/">
                 <span class="fas fa-angle-right" aria-hidden="true"></span> Vehicles
-            </NavLink>                                                   
-        </div>                                                           
-                                                                         
-        <div class="nav-item px-3">                                      
-            <NavLink class="nav-link" href="customers/">                 
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="customers/">
                 <span class="fas fa-angle-right" aria-hidden="true"></span> Customers
-            </NavLink>                                                   
-        </div>                                                           
-                                                                         
-         <div class="nav-item px-3">                                     
-            <NavLink class="nav-link" href="bookings/">                  
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="bookings/">
                 <span class="fas fa-angle-right" aria-hidden="true"></span> Bookings
             </NavLink>
         </div>
 
     </nav>
 </div>
-
-
-<div class="container-fluid">
-    
-</div>
-
 
 @code {
     private bool collapseNavMenu = true;

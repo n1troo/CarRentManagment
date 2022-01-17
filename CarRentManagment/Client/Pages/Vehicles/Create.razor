@@ -1,0 +1,118 @@
+﻿@page "/vehicles/create"
+
+@inject HttpClient _client
+@inject NavigationManager _navMan
+
+
+
+<h3>Create new vehicle</h3>
+<EditForm Model="@vehicle" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+   
+
+        <div class="form-group">
+            <label>Make: </label>
+            <div>
+                 <InputSelect @bind-Value="vehicle.MakeId" class="form-control">
+                    <option value="">-- Select Make --</option>
+                    @if (Makes != null)
+                    {
+                        foreach (var make in Makes)
+                        {
+                            <option value="@make.Id">@make.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => vehicle.MakeId)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Model: </label>
+            <div>
+                <InputSelect @bind-Value="vehicle.ModelId" class="form-control">
+                    <option value="">-- Select Model --</option>
+                    @if (Models != null)
+                    {
+                        foreach (var model in Models)
+                        {
+                            <option value="@model.Id">@model.Name</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => vehicle.ModelId)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Colour: </label>
+            <div>
+                <select @bind="vehicle.KolorId" class="form-control">
+                    <option value="">-- Select Colour --</option>
+                    @if (Kolors != null)
+                    {
+                        foreach (var colour in Kolors)
+                        {
+                            <option value="@colour.Id">@colour.Name</option>
+                        }
+                    }
+                </select>
+                <ValidationMessage For="@(() => vehicle.KolorId)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Year:</label>
+            <div>
+                <InputNumber @bind-Value="@vehicle.Year" class="form-control" />
+                <ValidationMessage For="@(() => vehicle.Year)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>License Plate Number:</label>
+            <div>
+                <InputText @bind-Value="@vehicle.LicensePlateNumber" class="form-control" />
+                <ValidationMessage For="@(() => vehicle.LicensePlateNumber)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Vehicle Identification Number:</label>
+            <div>
+                <InputText @bind-Value="@vehicle.Vin" class="form-control" />
+                <ValidationMessage For="@(() => vehicle.Vin)" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Daily Rate:</label>
+            <div>
+                <InputNumber @bind-Value="@vehicle.RentalRate" class="form-control" />
+                <ValidationMessage For="@(() => vehicle.RentalRate)" />
+            </div>
+        </div>
+  
+   
+    <button type="submit" class="btn btn-success btn-block">SUBMIT
+    </button>
+    
+   
+</EditForm>
+
+
+@code {
+    CarRentManagment.Shared.Domain.Vehicle vehicle = new Vehicle();
+    private IList<Make> Makes;
+    private IList<Model> Models;
+    private IList<Kolor> Kolors;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Makes = await _client.GetFromJsonAsync<IList<Make>>($"{Static.Endpoints.MakesEndpoint}");
+        Models = await _client.GetFromJsonAsync<IList<Model>>($"{Static.Endpoints.ModelsEndpoint}");
+        Kolors = await _client.GetFromJsonAsync<IList<Kolor>>($"{Static.Endpoints.KolorsEndpoint}");
+    }
+
+    private async Task OnValidSubmit()
+    {
+        await _client.PostAsJsonAsync(Static.Endpoints.VehiclesEndpoint, vehicle);
+        _navMan.NavigateTo("vehicles");
+    }
+
+}

@@ -3,7 +3,17 @@
 
 @inject HttpClient _Http
 @inject IJSRuntime js
-<h3 class="card-card-title">Cars</h3>
+@attribute [Authorize]
+
+<h3 class="card-card-title">Vehicules</h3>
+
+<div class="card shadow mb-4">
+    <a href="/vehicles/create" class="btn btn-secondary">
+        <span class="oi oi-plus">
+            Create new vehicle
+        </span>
+    </a>
+</div>
 
 
 
@@ -27,12 +37,12 @@ else
             <table class="table table table-hover">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Created by</th>
-                        <th scope="col">UpdatedBy</th>
-                        <th scope="col">Data0</th>
-                        <th scope="col">Button</th>
+                        <th scope="col">Make</th>
+                        <th scope="col">Model</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Dialy rent</th>
+                        <th scope="col">Actions</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -44,19 +54,20 @@ else
                             continue;
                         }
                         <tr>
-                            <td>@vehicle.Id</td>
+                            <td>@vehicle.Make.Name</td>
                             <td>@vehicle.Model.Name</td>
-                            <td>@vehicle.CreatedBy</td>
-                            <td>@vehicle.UpdatedBy</td>
-                            <td typeof="data">@vehicle.DateCreated</td>
+                            <td>@vehicle.Year</td>
+                            <td>@vehicle.RentalRate</td>
                             <td>
                                 <a href="/Vehicless/view" class="btn btn-warning btn-circle btn-sm">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                 </a>
-
+                                    <i class="fas fa-truck-pickup"></i>
+                                </a>
+                                <a href="/Vehicles/edit" class="btn btn-warning btn-circle btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
                                 <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(vehicle.Id))">
-                                     <i class="far fa-trash-alt"></i>
-                            </button>
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
                             </td>
                         </tr>
                     }
@@ -78,7 +89,8 @@ else
 
     private async Task Delete(int id)
     {
-        try{
+        try
+        {
             var confirm = await js.InvokeAsync<bool>("confirm", "Do you want delete?");
             if (confirm)
             {
@@ -86,7 +98,7 @@ else
                 await OnInitializedAsync();
             }
         }
-        catch(Exception ex)
+        catch(Exception)
         {
             
         }

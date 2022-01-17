@@ -22,5 +22,6 @@ namespace CarRentManagment.Server.IRepository
         void Update(T entity);
         Task Delete(int id);
         void DeleteRange(IEnumerable<T> entities);
+        Task GetAll(List<string> includes);
     }
 }

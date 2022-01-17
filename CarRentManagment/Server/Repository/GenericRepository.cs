@@ -47,10 +47,10 @@ namespace CarRentManagment.Server.Repository
         }
 
         public async Task<IList<T>> GetAll(
-            Expression<Func<T, bool>>? expression = null,
-           Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-           Func<IQueryable<T>, IIncludableQueryable<T, object>>? includes = null
-            )
+                            Expression<Func<T, bool>>? expression = null,
+                            Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+                            Func<IQueryable<T>, IIncludableQueryable<T, object>>? includes = null
+                            )
         {
             IQueryable<T> query = _db;
 
@@ -72,6 +72,10 @@ namespace CarRentManagment.Server.Repository
             return await query.AsNoTracking().ToListAsync();
         }
 
+        public Task GetAll(List<string> includes)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task Insert(T entity)
         {

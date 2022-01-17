@@ -3,6 +3,7 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 
+@attribute [Authorize]
 @if(ElementsCustomers == null){
     <Spinner/>
 }
@@ -25,9 +26,8 @@ else
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">TaxId</th>
-                        <th scope="col">Created by</th>
-                        <th scope="col">UpdatedBy</th>
-                        <th scope="col">Data</th>
+                        <th scope="col">Contact number</th>
+                        <th scope="col">Email</th>
                         <th scope="col">Button</th>
                     </tr>
                 </thead>
@@ -40,8 +40,8 @@ else
                         <tr>
                             <td>@Customer.Id</td>
                             <td>@Customer.TaxId</td>
-                            <td>@Customer.CreatedBy</td>
-                            <td>@Customer.UpdatedBy</td>
+                            <td>@Customer.ContactNumber</td>
+                            <td>@Customer.EmailAddress</td>
                             <td typeof="data">@Customer.DateCreated</td>
                             <td>
                                 <a href="/Customers/view" class="btn btn-warning btn-circle btn-sm">

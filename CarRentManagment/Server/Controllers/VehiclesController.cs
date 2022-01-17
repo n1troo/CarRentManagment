@@ -26,7 +26,9 @@ namespace CarRentManagment.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetVehicles()
         {
-            var Vehicles = await _unitOfWork.Vehicles.GetAll(includes: q => q.Include(x => x.Make).Include(x => x.Model)
+            var Vehicles = await _unitOfWork.Vehicles.GetAll(includes: q => q
+                .Include(x => x.Make)
+                .Include(x => x.Model)
                 .Include(x => x.Kolor));
             return Ok(Vehicles);
         }
@@ -35,7 +37,11 @@ namespace CarRentManagment.Server.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicle(int id)
         {
-            var Vehicle = await _unitOfWork.Vehicles.Get(q => q.Id == id);
+            var Vehicle = await _unitOfWork.Vehicles.Get(q => q.Id == id, q => q
+                .Include(x => x.Make)
+                .Include(x => x.Model)
+                .Include(x => x.Kolor)
+                .Include(x => x.Bookings));        
 
             if (Vehicle == null)
             {
@@ -97,15 +103,9 @@ namespace CarRentManagment.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Vehicles
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Vehicle>> PostVehicle(Vehicle Vehicle)
-        {
-            //if (Vehicle.Image != null)
-            //{
-            //    Vehicle.ImageName = CreateFile(Vehicle.Image, Vehicle.ImageName);
-            //}
+        { 
 
             await _unitOfWork.Vehicles.Insert(Vehicle);
             await _unitOfWork.Save(HttpContext);

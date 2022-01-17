@@ -23,34 +23,35 @@ else
             <table class="table table table-hover">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">ID</th>
                         <th scope="col">TaxId</th>
-                        <th scope="col">Created by</th>
-                        <th scope="col">UpdatedBy</th>
-                        <th scope="col">Data</th>
-                        <th scope="col">Button</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var Booking in ElementsBookings)
+                    @foreach (var booking in ElementsBookings)
                     {
 
-                        if (!(IsVisible(Booking)))
+                        if (!(IsVisible(booking)))
                             continue;
                         <tr>
-                            <td>@Booking.Id</td>
-                            <td>@Booking.Vehicle.Model</td>
-                            <td>@Booking.CreatedBy</td>
-                            <td>@Booking.UpdatedBy</td>
-                            <td typeof="data">@Booking.DateCreated</td>
+                            <td>@booking.Customer.TaxId</td>
+                            <td>@booking.DateCreated</td>
+                            <td>
+                                @((booking.DateIn - booking.DateOut).TotalDays.ToString());
+                            </td>
                             <td>
                                 <a href="/Bookings/view" class="btn btn-warning btn-circle btn-sm">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                 </a>
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </a>
 
-                                <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(Booking.Id))">
-                                     <i class="far fa-trash-alt"></i>
-                            </button>
+                                <a href="/bookings/details" class="btn btn-info">
+                                <span class="fa fa-pencil"></span>    
+                                </a>
+                                <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(booking.Id))">
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
                             </td>
                         </tr>
                     }

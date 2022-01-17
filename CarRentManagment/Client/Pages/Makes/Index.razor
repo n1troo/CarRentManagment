@@ -3,15 +3,58 @@
 
 @inject HttpClient _Http
 @inject IJSRuntime js
+@inject NavigationManager _navMan
 <h3 class="card-card-title">Car makes</h3>
 
 <head>
-    <!-- Custom styles for this template -->
-    @*<link href="css/sb-admin-2.min.css" rel="stylesheet">*@
+    <style>
+        .button-8 {
+            background-color: #e1ecf4;
+            border-radius: 3px;
+            border: 1px solid #7aa7c7;
+            box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+            box-sizing: border-box;
+            color: #39739d;
+            cursor: pointer;
+            display: inline-block;
+            font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.15385;
+            margin: 0;
+            outline: none;
+            padding: 8px .8em;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            vertical-align: baseline;
+            white-space: nowrap;
+        }
 
-    <!-- Custom styles for this page -->
-    @*<link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">*@
+            .button-8:hover,
+            .button-8:focus {
+                background-color: #b3d3ea;
+                color: #2c5777;
+            }
+
+            .button-8:focus {
+                box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+            }
+
+            .button-8:active {
+                background-color: #a0c7e4;
+                box-shadow: none;
+                color: #2c5777;
+            }
+    </style>
 </head>
+
+
+
+
 
 @if (Elements == null)
 {
@@ -20,14 +63,14 @@
 else
 {
     <div class="form-group">
-    <input class="form-control" type="text" placeholder="Filter..."
-        @bind="Filter"
-        @bind:event="oninput">
+        <input class="form-control" type="text" placeholder="Filter..."
+           @bind="Filter"
+           @bind:event="oninput">
     </div>
     <!-- Circle Buttons -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"> Marki samochodów</h6>
+            <button class="button-8 font-weight-bold text-primary" role="button" @onclick="(()=>BackClick())">Create new make</button>
         </div>
         <div class="card-body">
             <table class="table table table-hover">
@@ -57,12 +100,12 @@ else
                             <td typeof="data">@forecast.DateCreated</td>
                             <td>
                                 <a href="/makes/view" class="btn btn-warning btn-circle btn-sm">
-                                        <i class="fas fa-exclamation-triangle"></i>
-                                 </a>
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </a>
 
                                 <button class="btn alert-danger btn-circle btn-sm" @onclick="(()=> Delete(forecast.Id))">
-                                     <i class="far fa-trash-alt"></i>
-                            </button>
+                                    <i class="far fa-trash-alt"></i>
+                                </button>
                             </td>
                         </tr>
                     }
@@ -73,7 +116,7 @@ else
 }
 
 @code {
-    private List<Make>? Elements ;
+    private List<Make>? Elements;
     public string? Filter { get; set; }
 
 
@@ -84,7 +127,8 @@ else
 
     private async Task Delete(int id)
     {
-        try{
+        try
+        {
             var confirm = await js.InvokeAsync<bool>("confirm", "Do you want delete?");
             if (confirm)
             {
@@ -92,11 +136,16 @@ else
                 await OnInitializedAsync();
             }
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            
+
         }
 
+    }
+
+    private void BackClick()
+    {
+        _navMan.NavigateTo("");
     }
 
     public bool IsVisible(Make forecast)
@@ -104,9 +153,9 @@ else
         if (string.IsNullOrEmpty(Filter))
             return true;
 
-        if(forecast.Name != null)
-        if (forecast.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
-            return true;
+        if (forecast.Name != null)
+            if (forecast.Name.Contains(Filter, StringComparison.OrdinalIgnoreCase))
+                return true;
 
         return false;
     }
